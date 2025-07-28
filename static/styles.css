@@ -1,0 +1,188 @@
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pulse-glow-red {
+  0% { box-shadow: 0 0 10px #cc0000; }
+  50% { box-shadow: 0 0 20px #990000; }
+  100% { box-shadow: 0 0 10px #cc0000; }
+}
+
+@keyframes pulse-glow-purple {
+  0% { box-shadow: 0 0 10px #9b59b6; }
+  50% { box-shadow: 0 0 20px #8e44ad; }
+  100% { box-shadow: 0 0 10px #9b59b6; }
+}
+
+@keyframes pulse-glow-green {
+  0%   { box-shadow: 0 0 10px #2ecc71; }
+  50%  { box-shadow: 0 0 20px #00ff99; }
+  100% { box-shadow: 0 0 10px #2ecc71; }
+}
+
+@keyframes pulse-glow-blue {
+  0% { box-shadow: 0 0 10px #3498db; }
+  50% { box-shadow: 0 0 20px #2980b9; }
+  100% { box-shadow: 0 0 10px #3498db; }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 10px #ff69b4; }
+  50% { box-shadow: 0 0 20px #ff1493; }
+  100% { box-shadow: 0 0 10px #ff69b4; }
+}
+
+.glow-green {
+  animation: pulse-glow-green 2s infinite;
+  background-color: rgba(46, 204, 113, 0.15); /* Soft mint background */
+  box-shadow: 0 0 20px #00ff99;
+  border: none;
+  border-radius: 12px;
+}
+
+.glow-pink {
+  background-color: rgba(255, 105, 180, 0.15);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  animation: pulse-glow 2s infinite;
+  box-shadow: 0 0 10px #ff69b4;
+}
+
+.glow-blue {
+  animation: pulse-glow-blue 2s infinite;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #3498db;
+}
+
+.glow-purple {
+  animation: pulse-glow-purple 2s infinite;
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #bb33ff;
+}
+
+.glow-red {
+  animation: pulse-glow-red 2s infinite;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background-color: rgba(120, 5, 5, 0.11);
+  color: #a60000;
+}
+.pulse-glow-button {
+  animation: pulse-glow 1.5s infinite ease-in-out;
+}
+
+.pulse-button {
+  animation: pulse 1.7s infinite ease-in-out;
+}
+
+/* Base animated button style */
+.animated-button {
+  transition: all 0.4s ease-in-out;
+  background-color: transparent;
+  color: white;
+  border: 2px solid;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+/* Pink theme */
+.pink-button {
+  border-color: #ff69b4;
+  box-shadow: 0 0 10px #ff69b4;
+}
+.pink-button:hover {
+  background-color: #ff69b4;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #ff1493;
+}
+
+/* Red theme */
+.red-button {
+  border-color: #9a0606;
+  box-shadow: 0 0 10px #9a0606;
+}
+.red-button:hover {
+  background-color: #9a0606;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #c0392b;
+}
+
+/* Blue theme */
+.blue-button {
+  border-color: #3498db;
+  box-shadow: 0 0 10px #3498db;
+}
+.blue-button:hover {
+  background-color: #3498db;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #2980b9;
+}
+
+/* Green theme */
+.green-button {
+  border-color: #2ecc71;
+  box-shadow: 0 0 10px #2ecc71;
+}
+.green-button:hover {
+  background-color: #2ecc71;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #27ae60;
+}
+
+/* Purple theme */
+.purple-button {
+  border-color: #9b59b6;
+  box-shadow: 0 0 10px #9b59b6;
+}
+.purple-button:hover {
+  background-color: #9b59b6;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #8e44ad;
+}
+/* Reaction text highlight styles */
+.pink-highlight {
+  background-color: rgba(255, 105, 180, 0.2); /* brighter background */
+  border-left: 6px solid #ff1493;             /* hot pink */
+  box-shadow: 0 0 25px #ff69b4, 0 0 10px #ff1493 inset;
+}
+
+.red-highlight {
+  background-color: rgba(228, 39, 18, 0.591);
+  border-left: 6px solid #ff1a1a;
+  box-shadow: 0 0 25px #e74c3c, 0 0 10px #c0392b inset;
+}
+
+.blue-highlight {
+  background-color: rgba(52, 152, 219, 0.2);
+  border-left: 6px solid #00bfff;
+  box-shadow: 0 0 25px #3498db, 0 0 10px #2980b9 inset;
+}
+
+.green-highlight {
+  background-color: rgba(46, 204, 113, 0.2);
+  border-left: 6px solid #00ff99;
+  box-shadow: 0 0 25px #2ecc71, 0 0 10px #27ae60 inset;
+}
+
+.purple-highlight {
+  background-color: rgba(155, 89, 182, 0.2);
+  border-left: 6px solid #bb33ff;
+  box-shadow: 0 0 25px #9b59b6, 0 0 10px #8e44ad inset;
+}
+
+.yellow-highlight {
+  background-color: rgba(197, 210, 51, 0.251);
+  border-left: 6px solid #d4f119;
+  box-shadow: 0 0 25px #b0b65934, 0 0 10px #6aad44 inset;
+}
