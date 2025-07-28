@@ -1,0 +1,17 @@
+{
+    "name": "cafe_date",
+    "prompt": "alone, blue eyes, medium hair, earings, black hair, blunt bangs,anime woman, sitting at cafe, holding coffee cup, shy smile, sunny atmosphere, flowers in background, stylish outfit, casual flirty look",
+    "negative_prompt": "nsfw, poorly drawn, bad anatomy",
+    "steps": 25,
+    "cfg_scale": 7,
+    "seed": -1,
+    "width": 720,
+    "height": 1280,
+    "sampler_name": "Euler a",
+    "enable_hr": false,
+    "override_settings": {
+        "sd_model_checkpoint": "hsUltrahdCG_IllEpic.safetensors [860f6430d8]",
+        "CLIP_stop_at_last_layers": 2,
+        "sd_vae": "Automatic"
+    }
+}
