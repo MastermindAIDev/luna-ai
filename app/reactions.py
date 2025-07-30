@@ -17,6 +17,12 @@ def play_temp_audio(file_path, message):
     tmp = tempfile.NamedTemporaryFile(
         delete=False, suffix=ext, dir="assets/sounds")
     shutil.copyfile(file_path, tmp.name)
+
+    # 🔍 Debug prints
+    print(f"✅ Temp sound created: {tmp.name}")
+    print(f"📢 Original file used: {file_path}")
+    print(f"💬 Message: {message}")
+
     return tmp.name, gr.update(value=message)
 
 
@@ -53,4 +59,8 @@ def trigger_overwhelm():
 
 def _reaction(path, message, class_name):
     sound_path, message_update = play_temp_audio(path, message)
-    return sound_path, message_update, gr.update(elem_classes=class_name)
+    return (
+        gr.update(value=sound_path, visible=True, autoplay=True),  # explicitly set
+        message_update,
+        gr.update(elem_classes=class_name)
+    )

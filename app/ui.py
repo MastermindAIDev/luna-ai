@@ -89,7 +89,7 @@ def build_interface():
 
         # Reactions
         sound_output = gr.Audio(label="🔊 Luna Action",
-                                autoplay=True, visible=False)
+                                autoplay=True, visible=True, elem_id="hidden-audio")
         action_message = gr.Textbox(visible=True, interactive=False, label="Luna's Reaction",
                                     value="🐱 Hey babe... 👗", elem_id="reaction-message", elem_classes=["reaction-box"])
 
