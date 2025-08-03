@@ -7,16 +7,60 @@ import requests
 GENERATED_DIR = "generated"
 PROMPT_DIR = "prompts"
 
+# Automatically applied tags
+BASE_TAGS = [
+    "earrings", "black hair", "blunt bangs", "blue eyes", "medium hair",
+    "anime woman", "anime screencap", "anime style", "choker"
+]
+
+NEGATIVE_TAGS = [
+    "nsfw", "poorly drawn", "bad anatomy"
+]
+
 
 def load_prompt_config(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def generate_luna_image(config_name):
+def generate_luna_image(config_or_prompt, custom_prompt=None):
     try:
-        config_path = os.path.join(PROMPT_DIR, f"{config_name}.json")
-        payload = load_prompt_config(config_path)
+        if custom_prompt and custom_prompt.strip():
+            # User typed a prompt manually
+            user_prompt = custom_prompt.strip()
+            full_prompt = ", ".join(BASE_TAGS + [user_prompt])
+            full_negative = ", ".join(NEGATIVE_TAGS)
+
+            payload = {
+                "prompt": full_prompt,
+                "negative_prompt": full_negative,
+                "steps": 25,
+                "sampler_name": "Default",
+                "cfg_scale": 7.0,
+                "width": 720,
+                "height": 1280,
+                "seed": -1,
+                "enable_hr": False,
+                "override_settings": {
+                    "sd_model_checkpoint": "hsUltrahdCG_IllEpic.safetensors [860f6430d8]",
+                    "CLIP_stop_at_last_layers": 2,
+                    "sd_vae": "Automatic"
+                }
+            }
+
+        else:
+            # Load saved config file
+            config_path = os.path.join(PROMPT_DIR, f"{config_or_prompt}.json")
+            payload = load_prompt_config(config_path)
+
+            base_prompt = payload.get("prompt", "")
+            full_prompt = ", ".join(BASE_TAGS + [base_prompt.strip()])
+            full_negative = ", ".join(
+                set(NEGATIVE_TAGS + payload.get("negative_prompt", "").split(","))
+            )
+
+            payload["prompt"] = full_prompt
+            payload["negative_prompt"] = full_negative
 
         response = requests.post(
             "http://127.0.0.1:7860/sdapi/v1/txt2img",

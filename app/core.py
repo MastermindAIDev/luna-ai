@@ -1,6 +1,6 @@
 from app.ui import build_interface
 
-__version__ = "0.5.0"
+__version__ = "0.5.9"
 
 
 def launch():
