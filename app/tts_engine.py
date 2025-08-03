@@ -7,7 +7,7 @@ import gradio as gr
 # Initialize TTS model globally
 _tts = TTS(model_name="tts_models/en/jenny/jenny", progress_bar=False, gpu=False)
 
-def speak(text, semitone_shift=3):
+def speak(text, semitone_shift=4):
     """Generate a pitch-shifted voice file from text."""
     tmp_raw = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
     _tts.tts_to_file(text, file_path=tmp_raw.name)

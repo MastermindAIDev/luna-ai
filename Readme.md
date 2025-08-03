@@ -1,6 +1,6 @@
 # 💖 Luna – AI Companion App
 
-**Current Version: 0.4.0**
+**Current Version: 0.5.0**
 
 Luna is a playful, memory-aware AI companion powered by local large language models (LLMs), expressive TTS (Text-to-Speech), and Stable Diffusion image generation.
 
@@ -15,6 +15,7 @@ This project is designed as a modular, professional-grade demo that integrates:
 ## ✨ Features
 
 - 🧠 **Memory-Aware Chat** – Uses long-term memory to personalize conversations
+- 💖 **Affection System** – Luna's affection grows with your interactions and decays over time if ignored. Visualized with dynamic heart icons.
 - 🔊 **Voice Responses** – Converts Luna's replies into expressive speech
 - 🎨 **Scene Generation** – Create custom AI images based on predefined prompts
 - 💬 **Interaction Buttons** – Adds emotional reactions via sound effects 
@@ -72,6 +73,7 @@ To customize the AI-generated scenes, you can add your own .json prompt files:
 │   ├── image_gen.py        # Stable Diffusion image generation
 │   ├── memory.py           # Long-term memory management
 │   ├── reactions.py        # Sound button logic and temp cleanup
+    ├── affection.py        # Tracks, decays, and displays affection
 │   ├── tts_engine.py       # Jenny TTS voice synthesis
 │   ├── ui.py               # Gradio UI builder
 │   └── core.py             # App launcher

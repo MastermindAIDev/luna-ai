@@ -7,6 +7,7 @@
   padding: 0;
 }
 
+
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -91,22 +92,64 @@
   }
 }
 
-.glow-green {
-  animation: pulse-glow-green 2s infinite;
-  background-color: rgba(46, 204, 113, 0.15);
-  /* Soft mint background */
-  box-shadow: 0 0 20px #00ff99;
-  border: none;
-  border-radius: 12px;
+@keyframes subtle-pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.25);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Constant pulse for full hearts (❤️) */
+.filled-heart {
+  display: inline-block;
+  animation: subtle-pulse 1.5s ease-in-out infinite;
+}
+
+
+.reaction-box {
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 1rem;
+  border-radius: 10px;
+  transition: all 0.4s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Fix for the label */
+.reaction-box label {
+  text-align: left !important;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+
+.pulsing-heart {
+  display: inline-block;
+  animation: subtle-pulse 0.8s ease-in-out 2;
 }
 
 .glow-pink {
+  animation: pulse-glow-pink 2s infinite;
+  border: none;
+  /* 💥 Fixed double border */
+  border-radius: 12px;
   background-color: rgba(255, 105, 180, 0.15);
   color: white;
-  border: none;
-  border-radius: 8px;
-  animation: pulse-glow 2s infinite;
   box-shadow: 0 0 10px #ff69b4;
+  text-align: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
 }
 
 .glow-blue {
@@ -126,15 +169,32 @@
 
 .glow-red {
   animation: pulse-glow-red 2s infinite;
-  border: 2px solid transparent;
-  border-radius: 8px;
+  border: none;
+  /* 💥 Fixed double border */
+  border-radius: 12px;
   background-color: rgba(120, 5, 5, 0.11);
   color: #a60000;
+  box-shadow: 0 0 10px #cc0000;
+  text-align: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
 }
 
-.pulse-glow-button {
-  animation: pulse-glow 1.5s infinite ease-in-out;
+.glow-red .gr-markdown,
+.glow-red .gr-markdown>div,
+.glow-red .gr-markdown pre,
+.glow-red .gr-markdown code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  text-align: center;
+  box-shadow: none !important;
+  border: none !important;
 }
+
 
 .pulse-button {
   animation: pulse 1.7s infinite ease-in-out;
@@ -165,8 +225,8 @@
 
 /* Red theme */
 .red-button {
-  border-color: #9a0606;
-  box-shadow: 0 0 10px #9a0606;
+  border-color: #930303;
+  box-shadow: 0 0 10px #860000;
 }
 
 .red-button:hover {
@@ -224,17 +284,18 @@
   box-shadow: 0 0 25px #ff69b4, 0 0 10px #ff1493 inset;
 }
 
+.blue-highlight {
+  background-color: rgba(52, 152, 219, 0.2);
+  border-left: 6px solid #00bfff;
+  box-shadow: 0 0 25px #3498db, 0 0 10px #2980b9 inset;
+}
+
 .red-highlight {
   background-color: rgba(228, 39, 18, 0.591);
   border-left: 6px solid #ff1a1a;
   box-shadow: 0 0 25px #e74c3c, 0 0 10px #c0392b inset;
 }
 
-.blue-highlight {
-  background-color: rgba(52, 152, 219, 0.2);
-  border-left: 6px solid #00bfff;
-  box-shadow: 0 0 25px #3498db, 0 0 10px #2980b9 inset;
-}
 
 .green-highlight {
   background-color: rgba(46, 204, 113, 0.2);
