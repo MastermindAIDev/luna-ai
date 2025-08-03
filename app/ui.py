@@ -211,6 +211,15 @@ def build_interface():
                 prompt_choices[0] if prompt_choices else None),
             elem_classes="yellow-highlight"
         )
+
+        custom_prompt = gr.Textbox(
+            label="📝 Or write your own prompt for Luna",
+            placeholder="e.g. Luna in a school uniform, cherry blossoms, soft lighting",
+            lines=2,
+            max_lines=4,
+            elem_classes="pink-highlight"
+        )
+
         generate_btn = gr.Button(
             "🎨 Generate Luna Image", elem_classes=["green-button"])
         refresh_btn = gr.Button("🔄 Refresh Gallery",
@@ -240,10 +249,21 @@ def build_interface():
         overwhelm_btn.click(fn=affection_overwhelm, outputs=[
             sound_output, action_message, action_message, affection_display])
 
-        generate_btn.click(fn=lambda _: "⏳ Getting your picture... 💋 Please wait...", inputs=[prompt_selector], outputs=[progress_message]) \
-            .then(fn=generate_luna_image, inputs=[prompt_selector], outputs=[]) \
-            .then(fn=get_all_generated_images, outputs=[gallery]) \
-            .then(fn=lambda: "", outputs=[progress_message])
+        generate_btn.click(
+            fn=lambda *_: "⏳ Getting your picture... 💋 Please wait...",
+            inputs=[prompt_selector, custom_prompt],
+            outputs=[progress_message]
+        ).then(
+            fn=generate_luna_image,
+            inputs=[prompt_selector, custom_prompt],
+            outputs=[]
+        ).then(
+            fn=get_all_generated_images,
+            outputs=[gallery]
+        ).then(
+            fn=lambda: "",
+            outputs=[progress_message]
+        )
 
         refresh_btn.click(fn=get_all_generated_images, outputs=[gallery])
         chat_interface.load(fn=load_chat_history, outputs=[chatbot, state])

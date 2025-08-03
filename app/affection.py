@@ -11,14 +11,17 @@ MIN_AFFECTION = 0
 
 def load_affection():
     if os.path.exists(AFFECTION_FILE):
-        with open(AFFECTION_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            affection = data.get("affection", DEFAULT_AFFECTION)
-            last_updated = data.get("last_updated", time.time())
-            elapsed = time.time() - last_updated
-            decay = DECAY_RATE_PER_HOUR * (elapsed / 3600)
-            decayed = max(MIN_AFFECTION, affection - decay)
-            return decayed
+        try:
+            with open(AFFECTION_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                affection = data.get("affection", DEFAULT_AFFECTION)
+                last_updated = data.get("last_updated", time.time())
+                elapsed = time.time() - last_updated
+                decay = DECAY_RATE_PER_HOUR * (elapsed / 3600)
+                decayed = max(MIN_AFFECTION, affection - decay)
+                return decayed
+        except json.JSONDecodeError:
+            pass  # Silently ignore malformed file
     return DEFAULT_AFFECTION
 
 
@@ -100,4 +103,3 @@ def render_affection_hearts():
 
     html += '</div>'
     return html
-
