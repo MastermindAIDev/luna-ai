@@ -1,6 +1,6 @@
 # 💖 Luna – AI Companion App
 
-**Current Version: 0.5.0**
+**Current Version: 0.5.9**
 
 Luna is a playful, memory-aware AI companion powered by local large language models (LLMs), expressive TTS (Text-to-Speech), and Stable Diffusion image generation.
 
@@ -59,11 +59,12 @@ Luna uses [**Stable Diffusion WebUI**](https://github.com/AUTOMATIC1111/stable-d
 
 ### 🖼️ Adding Your Own Image Prompts
 
-To customize the AI-generated scenes, you can add your own .json prompt files:
+To customize the AI-generated scenes, you can add your own .json prompt files or type a custom prompt in the app:
 
 1. Go to the prompts/ folder in the project directory.
 2. Create a new .json file using the same format as the existing examples.
 3. Save your file in the prompts/ folder. It will automatically appear in the dropdown when you start the app.
+4. Or just write a custom prompt in the app.
 
 ## 📁 Project Structure
 ```

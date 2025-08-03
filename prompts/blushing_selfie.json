@@ -1,6 +1,6 @@
 {
     "name": "blushing_selfie",
-    "prompt": "alone, anime woman, blushing, cute expression, earings, black hair, blunt bangs,peace sign, selfie pose, detailed background, soft lighting, heart eyes, blue eyes, medium hair,  cozy outfit, photogenic smile",
+    "prompt": "alone, anime woman, blushing, choker, cute expression, earings, black hair, blunt bangs,peace sign, selfie pose, detailed background, soft lighting, heart eyes, blue eyes, medium hair,  cozy outfit, photogenic smile",
     "negative_prompt": "nsfw, poorly drawn, bad anatomy",
     "steps": 25,
     "cfg_scale": 7,
