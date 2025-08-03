@@ -1,7 +1,7 @@
 {
     "name": "rainy_day_window",
-    "prompt": "alone, blue eyes, medium hair, earings, black hair, blunt bangs,anime woman, looking out window, rainy background, emotional expression, soft sweater, wistful pose, candle lit room",
-    "negative_prompt": "nsfw, poorly drawn, bad anatomy",
+    "prompt": "alone, blue eyes, medium hair, earings, black hair, blunt bangs,anime woman, looking out window, rainy background, emotional expression, anime screencap, anime style, soft sweater, wistful pose, candle lit room",
+    "negative_prompt": "nsfw, poorly drawn, bad anatomy, realistic style",
     "steps": 25,
     "cfg_scale": 7,
     "seed": -1,

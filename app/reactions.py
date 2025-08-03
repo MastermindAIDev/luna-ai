@@ -2,6 +2,7 @@ import os
 import gradio as gr
 import shutil
 import tempfile
+import time
 
 _temp_hit_counter = 0
 
@@ -60,7 +61,8 @@ def trigger_overwhelm():
 def _reaction(path, message, class_name):
     sound_path, message_update = play_temp_audio(path, message)
     return (
-        gr.update(value=sound_path, visible=True, autoplay=True),  # explicitly set
+        gr.update(value=sound_path, visible=True,
+                  autoplay=True),  # explicitly set
         message_update,
         gr.update(elem_classes=class_name)
     )

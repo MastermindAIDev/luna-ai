@@ -34,3 +34,6 @@ data/long_term_memory.json
 generated/
 assets/sounds/tmp*.wav
 assets/sounds/tmp*.mp3
+
+# Notebooks
+Notebooks/
