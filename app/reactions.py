@@ -2,7 +2,6 @@ import os
 import gradio as gr
 import shutil
 import tempfile
-import time
 
 _temp_hit_counter = 0
 
