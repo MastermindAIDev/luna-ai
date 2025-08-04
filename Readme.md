@@ -85,9 +85,7 @@ To customize the AI-generated scenes, you can add your own .json prompt files or
 ├── assets/                  # Static media (images, sounds)
 │   ├── images/
 │   └── audio/
-├── data/
-│   ├── affection_score.json # Persistent affection tracking
-│   └── chat_history.json    # Memory log
+├── data/                    # Created at startup, holds persistent data
 ├── generated/               # AI-generated images
 ├── prompts/                 # Prompt templates for image generation
 ├── static/
