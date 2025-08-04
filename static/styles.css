@@ -143,8 +143,10 @@
   border-radius: 12px;
   background-color: rgba(255, 105, 180, 0.15);
   color: white;
+  width: 100%;
   box-shadow: 0 0 10px #ff69b4;
   text-align: center;
+  box-sizing: border-box;
 
   /* Remove these */
   /* width: 100%; */
