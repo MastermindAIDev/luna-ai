@@ -1,22 +1,24 @@
 # 💖 Luna – AI Companion App
 
-**Current Version: 0.5.9**
+**Current Version: 0.6.0**
 
-Luna is a playful, memory-aware AI companion powered by local large language models (LLMs), expressive TTS (Text-to-Speech), and Stable Diffusion image generation.
+Luna is a playful, memory-aware AI companion powered by local large language models (LLMs), expressive TTS (Text-to-Speech), STT (Speech-to-Text), and Stable Diffusion image generation.
 
 This project is designed as a modular, professional-grade demo that integrates:
 - Conversational memory and persona
 - Realistic voice synthesis (Jenny TTS)
+- Audio input via Speech-to-Text transcription
 - Dynamic image generation (via Stable Diffusion WebUI)
-- Playful UI with animated reactions
+- Playful UI with animated reactions and affection scoring
 
 ---
 
 ## ✨ Features
 
 - 🧠 **Memory-Aware Chat** – Uses long-term memory to personalize conversations
-- 💖 **Affection System** – Luna's affection grows with your interactions and decays over time if ignored. Visualized with dynamic heart icons.
+- 💖 **Affection System** – Luna's affection grows with your interactions and decays over time. Visualized with dynamic heart icons.
 - 🔊 **Voice Responses** – Converts Luna's replies into expressive speech
+- 🎙️ **Speech-to-Text Input** – Speak naturally and let Luna transcribe and respond in real time
 - 🎨 **Scene Generation** – Create custom AI images based on predefined prompts
 - 💬 **Interaction Buttons** – Adds emotional reactions via sound effects 
 - 📸 **Image Carousel** – Browse Luna’s photo set and AI-generated images
@@ -69,26 +71,36 @@ To customize the AI-generated scenes, you can add your own .json prompt files or
 ## 📁 Project Structure
 ```
 ├── app/
-│   ├── chatbot.py          # Chat logic and LLM interfacing
-│   ├── fact_extractor.py   # Extracts structured user info from input
-│   ├── image_gen.py        # Stable Diffusion image generation
-│   ├── memory.py           # Long-term memory management
-│   ├── reactions.py        # Sound button logic and temp cleanup
-    ├── affection.py        # Tracks, decays, and displays affection
-│   ├── tts_engine.py       # Jenny TTS voice synthesis
-│   ├── ui.py               # Gradio UI builder
-│   └── core.py             # App launcher
-├── assets/                 # Static media (images, sounds)
-│   ├── images/             
-│   └── audio/              
-├── data/                   # Persistent memory & chat logs
-├── generated/              # AI-generated images
-├── prompts/                # Prompt templates for image generation
-├── static/styles.css       # UI styling
-├── run.py                  # Entry point (calls app.core.launch)
+│   ├── __init__.py
+│   ├── affection.py         # Tracks, decays, and displays affection
+│   ├── chatbot.py           # Chat logic and LLM interfacing
+│   ├── core.py              # App launcher
+│   ├── fact_extractor.py    # Extracts structured user info from input
+│   ├── image_gen.py         # Stable Diffusion image generation
+│   ├── memory.py            # Long-term memory management
+│   ├── reactions.py         # Sound button logic and temp cleanup
+│   ├── transcriber.py       # Speech-to-text transcription handling
+│   ├── tts_engine.py        # Jenny TTS voice synthesis
+│   └── ui.py                # Gradio UI builder
+├── assets/                  # Static media (images, sounds)
+│   ├── images/
+│   └── audio/
+├── data/
+│   ├── affection_score.json # Persistent affection tracking
+│   └── chat_history.json    # Memory log
+├── generated/               # AI-generated images
+├── notebooks/               # Test notebooks
+│   ├── affection_test.ipynb
+│   ├── mic_phone_test.ipynb
+│   └── s2t_test.ipynb
+├── prompts/                 # Prompt templates for image generation
+├── static/
+│   └── styles.css           # UI styling
+├── run.py                   # Entry point (calls app.core.launch)
 ├── requirements.txt
 ├── LICENSE
 └── .gitignore
+
 ```
 
 ---

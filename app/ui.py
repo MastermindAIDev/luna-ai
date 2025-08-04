@@ -4,6 +4,7 @@ from app.tts_engine import speak_last_message
 from app.reactions import trigger_kiss, trigger_love, trigger_hug, trigger_play, trigger_overwhelm
 from app.image_gen import generate_luna_image, get_all_generated_images
 from app.affection import adjust_affection, format_affection_display, decay_affection
+from app.transcriber import transcribe_unified
 import os
 
 
@@ -17,27 +18,27 @@ def send_message(user_msg, chat_state):
 
 
 def affection_kiss():
-    adjust_affection(0.3)
+    adjust_affection(0.9)
     return trigger_kiss() + (format_affection_display(),)
 
 
 def affection_love():
-    adjust_affection(0.5)
+    adjust_affection(0.9)
     return trigger_love() + (format_affection_display(),)
 
 
 def affection_hug():
-    adjust_affection(0.25)
+    adjust_affection(0.9)
     return trigger_hug() + (format_affection_display(),)
 
 
 def affection_play():
-    adjust_affection(0.2)
+    adjust_affection(0.9)
     return trigger_play() + (format_affection_display(),)
 
 
 def affection_overwhelm():
-    adjust_affection(0.4)
+    adjust_affection(2.0)
     return trigger_overwhelm() + (format_affection_display(),)
 
 
@@ -61,6 +62,9 @@ def build_interface():
         with gr.Row(elem_classes="glow-red"):
             gr.Markdown("## ✧･ﾟ:* 💗 Luna 💗 *:･ﾟ✧",
                         elem_classes="centered-title")
+
+        with gr.Row(elem_classes="glow-red"):
+            affection_display = gr.HTML()
 
         with gr.Row():
             media_image = gr.Image(
@@ -157,8 +161,11 @@ def build_interface():
             clear_btn = gr.Button("🧹 Clear Chat")
             send_btn = gr.Button("➤ Send", interactive=False)
 
+        mic_input = gr.Audio(sources="microphone", type="filepath",
+                             label="🎤 Speak to Luna", format="wav", elem_classes="glow-blue")
+
         audio_output = gr.Audio(label="🔊 Luna's Voice", autoplay=True,
-                                scale=1, loop=False, elem_classes="glow-blue")
+                                scale=1, loop=False, elem_classes="glow-purple")
 
         with gr.Row():
             toggle_loop_btn = gr.Button(
@@ -183,11 +190,8 @@ def build_interface():
             play_btn = gr.Button("📲 Text", elem_classes=[
                 "animated-button", "blue-button"])
 
-        overwhelm_btn = gr.Button("Luna’s blushing 🌸", elem_classes=[
+        overwhelm_btn = gr.Button("Luna's blushing 🌸", elem_classes=[
             "animated-button", "purple-button", "pulse-button"])
-
-        with gr.Row(elem_classes="glow-red"):
-            affection_display = gr.HTML()
 
         timer = gr.Timer(value=30.0, active=True, render=True)
 
@@ -231,6 +235,28 @@ def build_interface():
 
         msg.submit(fn=send_message, inputs=[msg, state], outputs=[chatbot, msg, state]) \
             .then(fn=chat_with_luna, inputs=[msg, state], outputs=[chatbot, state, audio_output, msg, last_reply, speak_btn])
+
+        mic_input.change(
+            fn=transcribe_unified,
+            inputs=[mic_input, state],
+            outputs=[state, msg, state]
+        ).then(
+            fn=send_message,
+            inputs=[msg, state],
+            outputs=[chatbot, msg, state]
+        ).then(
+            fn=chat_with_luna,
+            inputs=[msg, state],
+            outputs=[chatbot, state, audio_output, msg, last_reply, speak_btn]
+        )
+
+# Instant reset of mic widget *right after recording stops*
+        mic_input.stop_recording(
+            fn=None,
+            inputs=[],
+            outputs=[mic_input],
+            js="() => null"  # JS is required, but we just return null
+        )
 
         clear_btn.click(fn=lambda: ([], []), outputs=[chatbot, state])
         speak_btn.click(fn=speak_last_message, inputs=[
