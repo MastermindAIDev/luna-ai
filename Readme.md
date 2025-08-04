@@ -1,6 +1,6 @@
 # 💖 Luna – AI Companion App
 
-**Current Version: 0.6.0**
+**Current Version: 0.6.1**
 
 Luna is a playful, memory-aware AI companion powered by local large language models (LLMs), expressive TTS (Text-to-Speech), STT (Speech-to-Text), and Stable Diffusion image generation.
 
@@ -89,10 +89,6 @@ To customize the AI-generated scenes, you can add your own .json prompt files or
 │   ├── affection_score.json # Persistent affection tracking
 │   └── chat_history.json    # Memory log
 ├── generated/               # AI-generated images
-├── notebooks/               # Test notebooks
-│   ├── affection_test.ipynb
-│   ├── mic_phone_test.ipynb
-│   └── s2t_test.ipynb
 ├── prompts/                 # Prompt templates for image generation
 ├── static/
 │   └── styles.css           # UI styling
