@@ -56,6 +56,9 @@ def build_interface():
             if filename.lower().endswith((".jpg", ".jpeg", ".png", ".gif", ".webp")):
                 media.append(
                     {"type": "image", "path": os.path.join(image_folder, filename)})
+            elif filename.lower().endswith((".mp4", ".webm")):
+                media.append(
+                    {"type": "video", "path": os.path.join(image_folder, filename)})
 
         media_index = gr.State(0)
 
@@ -70,14 +73,26 @@ def build_interface():
             media_image = gr.Image(
                 visible=True, show_label=False, scale=10, elem_classes="glow-pink")
             media_video = gr.Video(
-                visible=False, show_label=False, container=False, autoplay=True, loop=True)
+                visible=False, show_label=False, container=False, autoplay=True, loop=True, elem_classes="glow-pink")
 
         def update_media(index):
             item = media[index]
             if item["type"] == "image":
-                return item["path"], gr.update(visible=True), None, gr.update(visible=False), index
+                return (
+                    item["path"],            # media_image value
+                    gr.update(visible=True),  # media_image visible
+                    None,                     # media_video value
+                    gr.update(visible=False),  # media_video visible
+                    index                     # media_index
+                )
             else:
-                return None, gr.update(visible=False), item["path"], gr.update(visible=True), index
+                return (
+                    None,
+                    gr.update(visible=False),
+                    item["path"],             # media_video value
+                    gr.update(visible=True),
+                    index
+                )
 
         def next_media(index):
             new_index = (index + 1) % len(media)
@@ -141,12 +156,38 @@ def build_interface():
         """
             )
 
-        prev_btn.click(fn=prev_media, inputs=media_index, outputs=[
-                       media_image, media_image, media_video, media_video, media_index])
-        next_btn.click(fn=next_media, inputs=media_index, outputs=[
-                       media_image, media_image, media_video, media_video, media_index])
-        chat_interface.load(fn=update_media, inputs=[media_index], outputs=[
-                            media_image, media_image, media_video, media_video, media_index])
+        prev_btn.click(
+            fn=prev_media,
+            inputs=media_index,
+            outputs=[
+                media_image,               # image path
+                media_image,               # image visibility update
+                media_video,               # video path
+                media_video,               # video visibility update
+                media_index                # new index
+            ]
+        )
+
+        next_btn.click(
+            fn=next_media,
+            inputs=media_index,
+            outputs=[
+                media_image,               # image path
+                media_image,               # image visibility update
+                media_video,               # video path
+                media_video,               # video visibility update
+                media_index                # new index
+            ]
+        )
+        chat_interface.load(fn=update_media, inputs=[media_index],
+                            outputs=[
+            media_image,               # image path
+            media_image,               # image visibility update
+            media_video,               # video path
+            media_video,               # video visibility update
+            media_index                # new index
+        ]
+        )
 
         chatbot = gr.Chatbot(label="Luna", type="messages",
                              elem_classes="glow-purple")
