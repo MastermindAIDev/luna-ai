@@ -4,6 +4,7 @@ from app.tts_engine import speak_last_message
 from app.reactions import trigger_kiss, trigger_love, trigger_hug, trigger_play, trigger_overwhelm
 from app.image_gen import generate_luna_image, get_all_generated_images
 from app.affection import adjust_affection, format_affection_display, decay_affection
+from app.videogen import generate_luna_video, get_all_videos_from_comfy
 from app.transcriber import transcribe_unified
 import os
 
@@ -65,9 +66,6 @@ def build_interface():
         with gr.Row(elem_classes="glow-red"):
             gr.Markdown("## ✧･ﾟ:* 💗 Luna 💗 *:･ﾟ✧",
                         elem_classes="centered-title")
-
-        with gr.Row(elem_classes="glow-red"):
-            affection_display = gr.HTML()
 
         with gr.Row():
             media_image = gr.Image(
@@ -218,6 +216,9 @@ def build_interface():
         sound_output = gr.Audio(label="🔊 Luna Action",
                                 autoplay=True, visible=True, elem_id="hidden-audio")
 
+        with gr.Row(elem_classes="glow-red"):
+            affection_display = gr.HTML()
+
         action_message = gr.Textbox(visible=True, interactive=False, label="Luna's Reaction",
                                     value="🐱 Hey babe... 👗", elem_id="reaction-message", elem_classes=["reaction-box"])
 
@@ -243,6 +244,8 @@ def build_interface():
         gallery = gr.Gallery(label="🖼️ Luna's Gen Gallery", show_label=True, columns=[
                              3], height="auto", elem_classes="glow-pink")
 
+        progress_message = gr.Markdown("")
+
         prompt_folder = "prompts"
         prompt_choices = [
             os.path.splitext(f)[0] for f in os.listdir(prompt_folder)
@@ -267,9 +270,25 @@ def build_interface():
 
         generate_btn = gr.Button(
             "🎨 Generate Luna Image", elem_classes=["green-button"])
-        refresh_btn = gr.Button("🔄 Refresh Gallery",
+        refresh_btn = gr.Button("🔄 Refresh Image Gallery",
                                 elem_classes="blue-button")
         progress_message = gr.Markdown("")
+
+        video_gallery = gr.Gallery(label="🎬 Luna's Video Gallery", columns=[
+                                   2], height="auto", elem_classes="glow-blue")
+
+        with gr.Accordion("🎬 Video Settings", open=True, elem_classes="purple-highlight"):
+            # Optional: reuse your scene/preset dropdown prompt_selector if you have it
+            custom_video_prompt = gr.Textbox(
+                label="Custom Video Prompt",
+                placeholder="Type your prompt here... ",
+                lines=2
+            )
+
+        generate_video_btn = gr.Button(
+            "🎥 Generate Luna Video", elem_classes=["purple-button"])
+        refresh_video_btn = gr.Button(
+            "🔄 Refresh Video Gallery", elem_classes="yellow-button")
 
         send_btn.click(fn=send_message, inputs=[msg, state], outputs=[chatbot, msg, state]) \
             .then(fn=chat_with_luna, inputs=[msg, state], outputs=[chatbot, state, audio_output, msg, last_reply, speak_btn])
@@ -332,8 +351,40 @@ def build_interface():
             outputs=[progress_message]
         )
 
+        # ---- Video generation chain (new)
+        # ---- Video generation chain (final)
+        # generation: no gallery outputs here
+        generate_video_btn.click(
+            fn=lambda *_: "🎞️ Generating your video… 💋 Please wait...",
+            inputs=[prompt_selector, custom_video_prompt],
+            outputs=[progress_message],
+        ).then(
+            fn=generate_luna_video,
+            inputs=[prompt_selector, custom_video_prompt],
+            # <- keep empty so gallery stays interactive
+            outputs=[video_gallery],
+        ).then(
+            fn=lambda: "",
+            outputs=[progress_message],
+        )
+
+        # create the timer once (e.g., inside your Blocks)
+        auto_refresh = gr.Timer(5, active=True)  # every 5s
+
+# on each tick, refresh gallery
+        auto_refresh.tick(
+            fn=get_all_videos_from_comfy,
+            outputs=[video_gallery]
+        )
+
+        refresh_video_btn.click(
+            fn=get_all_videos_from_comfy, outputs=[video_gallery])
+
         refresh_btn.click(fn=get_all_generated_images, outputs=[gallery])
+
         chat_interface.load(fn=load_chat_history, outputs=[chatbot, state])
+        chat_interface.load(fn=get_all_videos_from_comfy,
+                            outputs=[video_gallery])
         chat_interface.load(fn=get_all_generated_images, outputs=[gallery])
         chat_interface.load(fn=format_affection_display,
                             outputs=[affection_display])

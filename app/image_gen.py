@@ -4,7 +4,7 @@ import base64
 import uuid
 import requests
 
-GENERATED_DIR = "generated"
+GENERATED_DIR = "generated/images"
 PROMPT_DIR = "prompts"
 
 # Automatically applied tags

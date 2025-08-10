@@ -1,27 +1,28 @@
 # 💖 Luna – AI Companion App
 
-**Current Version: 0.6.1**
+**Current Version: 0.8.0**
 
-Luna is a playful, memory-aware AI companion powered by local large language models (LLMs), expressive TTS (Text-to-Speech), STT (Speech-to-Text), and Stable Diffusion image generation.
+Luna is a playful, memory-aware AI companion powered by local large language models (LLMs), expressive TTS (Text-to-Speech), STT (Speech-to-Text), Stable Diffusion image generation, and **AnimateDiff-based video generation** via ComfyUI.
 
 This project is designed as a modular, professional-grade demo that integrates:
 - Conversational memory and persona
 - Realistic voice synthesis (Jenny TTS)
 - Audio input via Speech-to-Text transcription
-- Dynamic image generation (via Stable Diffusion WebUI)
+- Dynamic image & video generation (Stable Diffusion WebUI / ComfyUI)
 - Playful UI with animated reactions and affection scoring
 
 ---
 
 ## ✨ Features
 
-- 🧠 **Memory-Aware Chat** – Uses long-term memory to personalize conversations
+- 🧠 **Memory-Aware Chat** – Uses long-term memory to personalize conversations.
 - 💖 **Affection System** – Luna's affection grows with your interactions and decays over time. Visualized with dynamic heart icons.
-- 🔊 **Voice Responses** – Converts Luna's replies into expressive speech
-- 🎙️ **Speech-to-Text Input** – Speak naturally and let Luna transcribe and respond in real time
-- 🎨 **Scene Generation** – Create custom AI images based on predefined prompts
-- 💬 **Interaction Buttons** – Adds emotional reactions via sound effects 
-- 📸 **Image Carousel** – Browse Luna’s photo set and AI-generated images
+- 🔊 **Voice Responses** – Converts Luna's replies into expressive speech.
+- 🎙️ **Speech-to-Text Input** – Speak naturally and let Luna transcribe and respond in real time.
+- 🎨 **Scene Generation** – Create custom AI images via Stable Diffusion WebUI.
+- 🎥 **Video Generation** – Create smooth animated AI scenes using AnimateDiff in ComfyUI.
+- 💬 **Interaction Buttons** – Adds emotional reactions via sound effects.
+- 📸 **Media Galleries** – Browse Luna’s generated images and videos.
 
 ---
 
@@ -47,7 +48,7 @@ python run.py
 Open your browser to [http://localhost:8080](http://localhost:8080)
 
 > ⚠️ Requires `ffmpeg` installed and in PATH for audio processing
-> ⚠️ Requires that **Stable Diffusion WebUI (AUTOMATIC1111)** is already running with an API enabled  
+> ⚠️ Requires that Stable Diffusion WebUI (AUTOMATIC1111) or ComfyUI is already running with API enabled 
 > ⚠️ Assumes a **local LLM API**, such as KoboldCpp or llama.cpp, is available at `localhost:5001`
 ---
 ### 📦 Image Generation
@@ -58,6 +59,26 @@ Luna uses [**Stable Diffusion WebUI**](https://github.com/AUTOMATIC1111/stable-d
 > For best results, use the model `**hsUltrahdCG_IllEpic [860f6430d8]**` loaded in your WebUI instance.  
 > Prompts were designed and tested using this checkpoint for style and consistency.
 ---
+
+### 🎥 Video Generation (New)
+
+The videogen.py module allows Luna to create short AI-generated animations using AnimateDiff inside ComfyUI.
+
+Requirements:
+ComfyUI installed locally and running on http://127.0.0.1:8188
+
+AnimateDiff workflow JSON placed in prompts/ComfyUI/ (example provided)
+
+Sufficient VRAM for video generation
+
+How to Use:
+Make sure ComfyUI is running with AnimateDiff installed.
+
+Place your workflow JSON (e.g., animatediff_workflow.json) in prompts/ComfyUI/.
+
+In the Luna UI, click Generate Video.
+
+The resulting MP4 will appear in generated/videos and in Luna’s video gallery.
 
 ### 🖼️ Adding Your Own Image Prompts
 
@@ -81,19 +102,23 @@ To customize the AI-generated scenes, you can add your own .json prompt files or
 │   ├── reactions.py         # Sound button logic and temp cleanup
 │   ├── transcriber.py       # Speech-to-text transcription handling
 │   ├── tts_engine.py        # Jenny TTS voice synthesis
-│   └── ui.py                # Gradio UI builder
+│   ├── ui.py                # Gradio UI builder
+│   └── videogen.py          # AnimateDiff video generation (NEW)
 ├── assets/                  # Static media (images, sounds)
-│   ├── images/
-│   └── audio/
+├── ComfyUI/output/LunaGen/  # ComfyUI video/image temp output
 ├── data/                    # Created at startup, holds persistent data
-├── generated/               # AI-generated images
-├── prompts/                 # Prompt templates for image generation
+├── generated/
+│   ├── images/               # AI-generated images
+│   └── videos/               # AI-generated videos
+├── prompts/                 # Prompt templates
+│   └── ComfyUI/              # AnimateDiff workflows for videos
 ├── static/
 │   └── styles.css           # UI styling
-├── run.py                   # Entry point (calls app.core.launch)
+├── run.py                   # Entry point
 ├── requirements.txt
 ├── LICENSE
-└── .gitignore
+└── README.md
+
 
 ```
 

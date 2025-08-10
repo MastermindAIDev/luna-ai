@@ -1,45 +1,64 @@
-# Byte-compiled / optimized / DLL files
+# ===============================
+# Python Bytecode / Caches
+# ===============================
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 
-# Virtual environments
+# ===============================
+# Virtual Environments
+# ===============================
 venv/
 .env/
+lunaenv/
 
-# Editor settings
+# ===============================
+# Editor Settings
+# ===============================
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
 
-# System files
+# ===============================
+# System Files
+# ===============================
 .DS_Store
 Thumbs.db
-
-# Logs and outputs
-*.log
-
-# OS junk
 ehthumbs.db
 desktop.ini
 
-# Virtual Envs
-lunaenv/
+# ===============================
+# Logs and Outputs
+# ===============================
+*.log
 
-# Gradio temp
+# ===============================
+# Gradio Temporary Files
+# ===============================
 gradio_cached_examples/
 
-# Project-specific
+# ===============================
+# Project-Specific Data
+# ===============================
 data/chat_history.json
 data/long_term_memory.json
 data/affection_score.json
-prompts/ComfyUI/animatediff_workflow_test.json
-Notebooks/*
+
+# ===============================
+# Generated Media
+# ===============================
 generated/
 assets/sounds/tmp*.wav
 assets/sounds/tmp*.mp3
 
+# ===============================
+# ComfyUI Temporary Output
+# ===============================
+ComfyUI/output/LunaGen/
+
+# ===============================
 # Notebooks
+# ===============================
 Notebooks/
