@@ -6,7 +6,13 @@ from app.image_gen import generate_luna_image, get_all_generated_images
 from app.affection import adjust_affection, format_affection_display, decay_affection
 from app.videogen import generate_luna_video, get_all_videos_from_comfy
 from app.transcriber import transcribe_unified
+from app.avatar import avatar_html
+from pathlib import Path
 import os
+import base64
+
+DEFAULT_GLB = Path(__file__).resolve().parent.parent / \
+    "assets" / "models" / "luna_avatar.glb"
 
 
 def send_message(user_msg, chat_state):
@@ -218,6 +224,25 @@ def build_interface():
 
         with gr.Row(elem_classes="glow-red"):
             affection_display = gr.HTML()
+
+        html = avatar_html(
+            "assets/animations/luna_idle.glb",   # your animated GLB
+            height_px=540, exposure=1.15, env_intensity=1.35,
+            autorotate=False, show_grid=False,
+            background="radial-gradient(circle at 50% 35%, #120021 0%, #2b0a3d 50%, #070010 100%)",
+        )
+
+        # Escape characters that would break the attribute
+        def esc(s: str) -> str:
+            return (s.replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
+                    .replace('"', "&quot;"))
+        with gr.Row(elem_classes="glow-pink"):
+            gr.HTML(
+                f'<iframe style="width:100%;height:540px;border:0;border-radius:16px" '
+                f'sandbox="allow-scripts allow-same-origin" srcdoc="{esc(html)}"></iframe>'
+            )
 
         action_message = gr.Textbox(visible=True, interactive=False, label="Luna's Reaction",
                                     value="🐱 Hey babe... 👗", elem_id="reaction-message", elem_classes=["reaction-box"])
