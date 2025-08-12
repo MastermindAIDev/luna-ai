@@ -1,8 +1,8 @@
 # 💖 Luna – AI Companion App
 
-**Current Version: 0.8.0**
+**Current Version: 0.8.9**
 
-Luna is a playful, memory-aware AI companion powered by local large language models (LLMs), expressive TTS (Text-to-Speech), STT (Speech-to-Text), Stable Diffusion image generation, and **AnimateDiff-based video generation** via ComfyUI.
+Luna is a playful, memory-aware AI companion powered by local large language models (LLMs), expressive TTS (Text-to-Speech), STT (Speech-to-Text), Stable Diffusion image generation, AnimateDiff-based video generation via ComfyUI, and now a 3D animated avatar viewer with camera controls.
 
 This project is designed as a modular, professional-grade demo that integrates:
 - Conversational memory and persona
@@ -10,6 +10,7 @@ This project is designed as a modular, professional-grade demo that integrates:
 - Audio input via Speech-to-Text transcription
 - Dynamic image & video generation (Stable Diffusion WebUI / ComfyUI)
 - Playful UI with animated reactions and affection scoring
+- Live 3D avatar display with animations and custom backgrounds
 
 ---
 
@@ -23,6 +24,7 @@ This project is designed as a modular, professional-grade demo that integrates:
 - 🎥 **Video Generation** – Create smooth animated AI scenes using AnimateDiff in ComfyUI.
 - 💬 **Interaction Buttons** – Adds emotional reactions via sound effects.
 - 📸 **Media Galleries** – Browse Luna’s generated images and videos.
+- 👩‍💻 3D Avatar Display (NEW) – Real-time rendering of Luna’s animated avatar using GLB models, with smooth camera control, reset button, and themed gradient backgrounds.
 
 ---
 
@@ -60,7 +62,22 @@ Luna uses [**Stable Diffusion WebUI**](https://github.com/AUTOMATIC1111/stable-d
 > Prompts were designed and tested using this checkpoint for style and consistency.
 ---
 
-### 🎥 Video Generation (New)
+### 🖼️ 3D Avatar Viewer (NEW in 0.8.9)
+Luna now has a real-time 3D animated avatar powered by Three.js and GLTF/GLB models.
+Features:
+
+Smooth bust-focused camera view
+
+Gradient dark-purple/pink background
+
+Reset View button
+
+Support for multiple animations (future updates will allow animation switching and lip-sync with speech)
+
+Current model:
+assets/animations/luna_idle.glb – Idle pose animation with full textures.
+
+### 🎥 Video Generation 
 
 The videogen.py module allows Luna to create short AI-generated animations using AnimateDiff inside ComfyUI.
 
@@ -93,33 +110,34 @@ To customize the AI-generated scenes, you can add your own .json prompt files or
 ```
 ├── app/
 │   ├── __init__.py
-│   ├── affection.py         # Tracks, decays, and displays affection
-│   ├── chatbot.py           # Chat logic and LLM interfacing
-│   ├── core.py              # App launcher
-│   ├── fact_extractor.py    # Extracts structured user info from input
-│   ├── image_gen.py         # Stable Diffusion image generation
-│   ├── memory.py            # Long-term memory management
-│   ├── reactions.py         # Sound button logic and temp cleanup
-│   ├── transcriber.py       # Speech-to-text transcription handling
-│   ├── tts_engine.py        # Jenny TTS voice synthesis
-│   ├── ui.py                # Gradio UI builder
-│   └── videogen.py          # AnimateDiff video generation (NEW)
-├── assets/                  # Static media (images, sounds)
-├── ComfyUI/output/LunaGen/  # ComfyUI video/image temp output
-├── data/                    # Created at startup, holds persistent data
+│   ├── affection.py
+│   ├── avatar.py             # 3D avatar module (NEW)
+│   ├── chatbot.py
+│   ├── core.py
+│   ├── fact_extractor.py
+│   ├── image_gen.py
+│   ├── memory.py
+│   ├── reactions.py
+│   ├── transcriber.py
+│   ├── tts_engine.py
+│   ├── ui.py
+│   └── videogen.py
+├── assets/
+│   ├── animations/
+│   │   └── luna_idle.glb     # Animated avatar model (NEW)
+│   ├── images/
+│   └── sounds/
 ├── generated/
-│   ├── images/               # AI-generated images
-│   └── videos/               # AI-generated videos
-├── prompts/                 # Prompt templates
-│   └── ComfyUI/              # AnimateDiff workflows for videos
+│   ├── images/
+│   └── videos/
+├── prompts/
+│   └── ComfyUI/
 ├── static/
-│   └── styles.css           # UI styling
-├── run.py                   # Entry point
+│   └── styles.css
+├── run.py
 ├── requirements.txt
 ├── LICENSE
 └── README.md
-
-
 ```
 
 ---
